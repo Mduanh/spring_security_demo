@@ -11,6 +11,6 @@
     <title>home</title>
 </head>
 <body>
-    ${greeting}
+${home}
 </body>
 </html>

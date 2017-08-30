@@ -105,6 +105,11 @@
             <version>2.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>net.duanlang</groupId>
+            <artifactId>ssd_security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>ssd_web_admin</finalName>
