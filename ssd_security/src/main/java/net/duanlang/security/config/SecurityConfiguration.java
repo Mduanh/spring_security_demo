@@ -1,8 +1,10 @@
 package net.duanlang.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * Time: 2017/8/30 7:30
  * Description:权限配置
  **/
+@Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     /**
      * 基于内存验证
@@ -26,8 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.authorizeRequests().antMatchers("/","/home").permitAll()//允许所有人访问
-                 .antMatchers("/admin/**").access("ADMIN")//允许管理员访问
-                .antMatchers("/db/**").access("hasRole('DBA') and hasRole('ADMIN')")//允许所有人访问
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")//允许管理员访问
+                .antMatchers("/dba/**").access("hasRole('DBA') and hasRole('ADMIN')")//允许所有人访问
                 .and()
                 .formLogin()//使用系统的登录界面  ss框架中自带的
                 .and()

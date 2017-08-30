@@ -11,6 +11,6 @@
     <title>dba</title>
 </head>
 <body>
-    ${dba}
+    ${dba}<a href="/logout">注销</a>
 </body>
 </html>

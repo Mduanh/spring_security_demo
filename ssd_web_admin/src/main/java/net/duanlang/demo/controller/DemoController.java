@@ -3,12 +3,15 @@ package net.duanlang.demo.controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created with IntelliJ IDEA.
  * Author: dh
  * Time: 2017/8/30 8:03
  * Description:
@@ -16,24 +19,34 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class DemoController {
     @RequestMapping("/home")
-    public String home(ModelAndView modelAndView){
-        modelAndView.addObject("greeting","你好，欢迎访问");
+    public String home(ModelMap modelMap){
+        modelMap.addAttribute("home","你好，欢迎访问");
         return "home";
     }
     @RequestMapping("/admin")
-    public String admin(ModelAndView modelAndView){
-        modelAndView.addObject("admin","你好，admin");
+    public String admin(ModelMap modelMap){
+        modelMap.addAttribute("admin","你好，admin");
         return "admin";
     }
     @RequestMapping("/dba")
-    public String dba(ModelAndView modelAndView){
-        modelAndView.addObject("dba","你好，dba");
+    public String dba(ModelMap modelMap){
+        modelMap.addAttribute("dba","你好，dba");
         return "dba";
     }
     @RequestMapping("/accessDenied")
-    public String accessDenied(ModelAndView modelAndView){
-        modelAndView.addObject("accessDenied","你好，"+getPrincipal()+"权限不足");
+    public String accessDenied(ModelMap modelMap){
+        modelMap.addAttribute("accessDenied","你好，"+getPrincipal()+"权限不足");
         return "accessDenied";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap){
+        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+        if(authentication!=null){
+            new SecurityContextLogoutHandler().logout(request,response,authentication);
+        }
+        modelMap.addAttribute("home","注销成功");
+        return "home";
     }
 
     private String getPrincipal() {

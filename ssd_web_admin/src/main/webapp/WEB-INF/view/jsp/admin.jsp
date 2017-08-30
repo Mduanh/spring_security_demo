@@ -12,5 +12,6 @@
 </head>
 <body>
     ${admin}
+<a href="/logout">注销</a>
 </body>
 </html>
